@@ -1,0 +1,36 @@
+.flexbox-turn-on {
+  display: flex;
+  flex-direction: column;
+}
+
+#main {
+  animation: upAndDown 4s infinite;
+  margin-bottom: 20%;
+}
+
+#shadow {
+  animation: shrinkAndGrow 4s infinite;
+}
+@keyframes upAndDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes shrinkAndGrow {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
