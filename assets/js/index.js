@@ -78,8 +78,24 @@ $(document).ready(function () {
     `<img src="${randomImageSrc}" alt="Trainer Image" id="trainer"/>`
   );
 
+  if (randomImageSrc === "./assets/images/mary-trainer.svg") {
+    $("#trainer").css({
+      bottom: "3%",
+      right: "-14%",
+    });
+  } else {
+    $("#trainer").css({ right: "-7%", bottom: "-17%" }); // Apply common CSS property for other images
+  }
   // Check if the screen width is less than or equal to 599px
   if (window.matchMedia("(max-width: 600px)").matches) {
-    $("#trainer").css("bottom", "62%");
+    if (randomImageSrc === "./assets/images/mary-trainer.svg") {
+      $("#trainer").css({ bottom: "62%", right: "unset" });
+    } else {
+      $("#trainer").css({
+        bottom: "62%",
+        width: "40%",
+        right: "unset", // Add right: unset
+      });
+    }
   }
 });
