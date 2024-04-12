@@ -21,13 +21,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Materialize JavaScript CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- Local style -->
+    <!-- Local styles -->
     <link rel="stylesheet" href="./assets/css/index.css" />
+    <link rel="stylesheet" href="./assets/css/animation.css" />
   </head>
   <body>
     <!-- Intro convo container -->
     <div class="container">
-      <div class="row flexbox-turn-on" id="column">
+      <!-- <div class="row flexbox-turn-on" id="column">
         <div class="col s8 flexbox-turn-on" id="landing">
           <div id="animated-text" class="flow-text"></div>
           <button
@@ -49,6 +50,85 @@
           </button>
         </div>
         <div class="col s4" id="trainer-div"></div>
+      </div> -->
+      <div id="game" class="row flexbox-turn-on">
+        <div id="player" class="col s5 flexbox-turn-on player-box">
+          <div class="deck-stack">
+            <img
+              src="./assets/images/card-back.png"
+              alt="deck of pokemon cards"
+              class="poke-deck"
+            />
+
+            <img
+              src="./assets/images/card-back.png"
+              alt="deck of pokemon cards"
+              class="poke-deck card-children"
+            />
+
+            <img
+              src="./assets/images/card-back.png"
+              alt="deck of pokemon cards"
+              class="poke-deck card-children"
+            />
+            <img
+              src="./assets/images/card-back.png"
+              alt="deck of pokemon cards"
+              class="poke-deck card-children"
+            />
+          </div>
+          <img
+            src="./assets/images/card1.png"
+            alt="venosaur pokemon card"
+            class="current-card played-card"
+            id="player-card"
+          />
+        </div>
+        <div class="col s2 flexbox-turn-on" id="logo-animation">
+          <img
+            src="./assets/images/logo-main.svg"
+            id="main"
+            alt="Parsemon Logo"
+          />
+          <img
+            src="./assets/images/logo-shadow.svg"
+            id="shadow"
+            alt="Parsemon Logo shadow for hover animation"
+          />
+        </div>
+
+        <div id="rival" class="col s5 flexbox-turn-on player-box">
+          <img
+            src="./assets/images/card2.png"
+            alt="chespin pokemon card"
+            class="current-card played-card"
+            id="rival-card"
+          />
+          <div class="deck-stack" id="right-deck">
+            <img
+              src="./assets/images/card-back.png"
+              alt="deck of pokemon cards"
+              class="poke-deck"
+            />
+
+            <img
+              src="./assets/images/card-back.png"
+              alt="deck of pokemon cards"
+              class="poke-deck card-children"
+            />
+
+            <img
+              src="./assets/images/card-back.png"
+              alt="deck of pokemon cards"
+              class="poke-deck card-children"
+            />
+            <img
+              src="./assets/images/card-back.png"
+              alt="deck of pokemon cards"
+              class="poke-deck card-children"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <script src="./assets/js/index.js"></script>

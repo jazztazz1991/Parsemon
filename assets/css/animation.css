@@ -1,6 +1,5 @@
 .flexbox-turn-on {
   display: flex;
-  flex-direction: column;
 }
 
 #main {
@@ -32,5 +31,21 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+#logo-animation {
+  display: flex;
+  flex-direction: column;
+  width: 12%;
+  justify-content: center;
+}
+
+/* ----------       Desktop Devices > 992px L     ------------- */
+
+@media only screen and (max-width: 992px) {
+  #logo-animation {
+    margin: auto;
+    margin-top: 2%;
   }
 }
