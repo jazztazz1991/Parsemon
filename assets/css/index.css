@@ -58,11 +58,14 @@ body {
   justify-content: center; /* Align horizontally */
   align-items: center; /* Align vertically */
   height: 100%;
+  width: 95%;
 }
 #animated-text {
   width: 70vw;
 }
-
+#game {
+  justify-content: center;
+}
 #landing {
   width: auto;
   font-family: "Pokemon GB", Arial, sans-serif;
@@ -74,6 +77,62 @@ body {
   border: 1px solid white;
   box-shadow: 0 1px 0 1px black, inset 0 1px 0 1px black, 0 0 0 1px black,
     inset 0 0 0 1px black;
+}
+.deck {
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  width: max-content;
+}
+.played-card {
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+}
+.current-card {
+  width: 44%;
+}
+.deck-stack {
+  position: relative;
+}
+.card-children {
+  position: absolute;
+}
+.poke-deck {
+  width: 75%;
+}
+
+.poke-deck:nth-child(2) {
+  top: 6px;
+  left: 6px;
+}
+
+.poke-deck:nth-child(3) {
+  top: 12px;
+  left: 12px;
+}
+
+.poke-deck:nth-child(4) {
+  top: 18px;
+  left: 18px;
+}
+
+.player-deck {
+  width: 30%;
+}
+.player-box {
+  align-items: center;
+}
+
+.player-card {
+  width: 30%;
+}
+#right-deck {
+  left: 10%;
 }
 
 /* ============================================================ *\
@@ -108,6 +167,14 @@ body {
 /* ----------       Desktop Devices > 992px L     ------------- */
 
 @media only screen and (max-width: 992px) {
+  #game {
+    flex-direction: column;
+    margin-top: 18%;
+  }
+  .row .col.s5 {
+    margin: auto !important;
+    width: 65% !important;
+  }
 }
 
 /* ------       Large Desktop Devices > 1200px  XL      ------ */
