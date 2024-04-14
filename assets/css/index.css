@@ -135,6 +135,11 @@ body {
   left: 10%;
 }
 
+#trashbox{
+  margin: 40px;
+  background-color: purlple;
+}
+
 /* ============================================================ *\
 *      Media Queries (Alphabetical by screen size break          *
 \* -----------------------------------------------------------  */

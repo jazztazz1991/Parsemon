@@ -126,7 +126,6 @@ function buildPokeDecks(res) {
             pokemon = 0;
         }
         console.log("all decks built");
-        beginPlay(fireDeck);
     } else {
         console.log("no data retrieved");
         return
@@ -159,8 +158,68 @@ function beginPlay(deckChoice) {
         return;
     }
     console.log(userHand);
+    for(let i = 0; i < userHand.length; i++){
+        const card = $('<div>').addClass('pokecard');
+        const cardImg = $('<img>').attr('src', userHand[i].images.small);
+        const cardName = $('<p>').text(userHand[i].name);
+        let cardType;
+        if(userHand[i].types){
+            cardType = $('<p>').text(userHand[i].types[0]);
+        }
+        const attacks = $('<div>').addClass('attacks');
+        if(userHand[i].attacks){
+            for(let x = 0; x < userHand[i].attacks.length; x++){
+                const cardAttack = $('<button>').addClass('atkBtn').text(userHand[i].attacks[x].name);
+                attacks.append(cardAttack);
+            }
+        }   
+        card.append(cardImg, cardName, cardType, attacks);
+        $('#userHand').append(card);
+    }
+    const draw = $('<button>').attr('id', 'draw').text('Draw Card');
+    // draw.on(click, drawCard(userDeck));
+    draw.on('click', function(){
+        console.log('draw card');
+    });
+    $('#userHand').append(draw);
+}
+
+//draw a card from the users deck
+function drawCard(deck) {
+    const card = $('<div>').addClass('pokecard');
+    const cardImg = $('<img>').attr('src', deck[0].images.small);
+    const cardName = $('<p>').text(deck[0].name);
+    let cardType;
+    if(deck[0].types){
+        cardType = $('<p>').text(deck[0].types[0]);
+    }
+    const attacks = $('<div>').addClass('attacks');
+    if(deck[0].attacks){
+        for(let x = 0; x < deck[0].attacks.length; x++){
+            const cardAttack = $('<button>').addClass('atkBtn').text(deck[0].attacks[x].name);
+            attacks.append(cardAttack);
+        }
+    }   
+    card.append(cardImg, cardName, cardType, attacks);
+    $('#userHand').append(card);
+    deck.shift();
 }
 
 $(document).ready(function () {
     getPokecards();
-})
+
+
+    $("#fire").click(function () {
+        beginPlay(fireDeck);
+    });
+    $("#water").click(function () {
+        beginPlay(waterDeck);
+    });
+    $("#lightning").click(function () {
+        beginPlay(lightningDeck);
+    });
+    $("#grass").click(function () {
+        beginPlay(grassDeck);
+    });
+    
+});
