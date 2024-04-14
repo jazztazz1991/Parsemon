@@ -5,6 +5,12 @@ const lightningDeck = [];
 const grassDeck = [];
 
 //fetch base1 set cards from pokemontcg api
+function getStoredHand() {
+    return JSON.parse(localStorage.getItem('userHand'));
+}
+function getStoredDeck() {
+    return JSON.parse(localStorage.getItem('userDeck'));
+}
 function getPokecards() {
     $.ajax({
         url: 'https://api.pokemontcg.io/v2/cards?q=set.id:base1&orderBy=number',
@@ -14,12 +20,11 @@ function getPokecards() {
 
 //build a 60 card deck for each of the 4 main types: fire, water, lightning, grass
 function buildPokeDecks(res) {
-    console.log("buildDeckRunnings")
+    console.log("buildDeckRunnings");
     const allCards = res.data;
     let energy = 0;
     let pokemon = 0;
     let trainer = 0;
-    let keepLooping = true;
     if (allCards) {
         if (fireDeck.length <= 60) {
             console.log("firedeck");
@@ -134,75 +139,79 @@ function buildPokeDecks(res) {
 
 //get the users deck choice and draw their first hand
 function beginPlay(deckChoice) {
-    const userDeck = deckChoice;
-    let userHand = []
-
+    let userDeck = deckChoice;
+    let userHand = [];
+    localStorage.setItem('userDeck', JSON.stringify(userDeck));
+    console.log(userDeck.length)
     if (userDeck) {
         let basicPokemon = false
+
         do {
+            userHand = [];
             //build the users hand
             for (let i = 0; i < 7; i++) {
-                const randomNumber = Math.floor(Math.random() * userDeck.length);
+                const randomNumber = Math.floor(Math.random() * (userDeck.length - 1));
                 userHand.push(userDeck[randomNumber]);
-                userDeck.splice(randomNumber, 1);
-                
-            }
-            //check if there are any basic pokemon in user hand
-            for (let x = 0; x < userHand.length; x++) {
-                if (userHand[x].subtypes[0] === "basic") {
+                if (userDeck[randomNumber].subtypes[0] == "Basic" && userDeck[randomNumber].supertype == "Pokémon") {
+                    console.log("basic pokemon added");
                     basicPokemon = true;
                 }
+                userDeck.splice(randomNumber, 1);
             }
-        } while (basicPokemon == true);
+            if (!basicPokemon) {
+                console.log('no basics - reshuffling')
+                for (let i = 0; i < userHand.length; i++) {
+                    userDeck.push(userHand[i])
+                }
+                userDeck = shuffleDeck(userDeck);
+                console.log(userDeck)
+            }
+        } while (!basicPokemon);
     } else {
         return;
     }
     console.log(userHand);
-    for(let i = 0; i < userHand.length; i++){
-        const card = $('<div>').addClass('pokecard');
-        const cardImg = $('<img>').attr('src', userHand[i].images.small);
-        const cardName = $('<p>').text(userHand[i].name);
-        let cardType;
-        if(userHand[i].types){
-            cardType = $('<p>').text(userHand[i].types[0]);
-        }
-        const attacks = $('<div>').addClass('attacks');
-        if(userHand[i].attacks){
-            for(let x = 0; x < userHand[i].attacks.length; x++){
-                const cardAttack = $('<button>').addClass('atkBtn').text(userHand[i].attacks[x].name);
-                attacks.append(cardAttack);
-            }
-        }   
-        card.append(cardImg, cardName, cardType, attacks);
+    for (let i = 0; i < userHand.length; i++) {
+        const card = buildCard(userHand[i]);
         $('#userHand').append(card);
     }
     const draw = $('<button>').attr('id', 'draw').text('Draw Card');
-    // draw.on(click, drawCard(userDeck));
-    draw.on('click', function(){
+    draw.on('click', function () {
         console.log('draw card');
+        drawCard();
     });
     $('#userHand').append(draw);
 }
+function shuffleDeck(deck) {
+    return deck.sort(() => Math.random() - 0.5);
+}
 
-//draw a card from the users deck
-function drawCard(deck) {
-    const card = $('<div>').addClass('pokecard');
-    const cardImg = $('<img>').attr('src', deck[0].images.small);
-    const cardName = $('<p>').text(deck[0].name);
-    let cardType;
-    if(deck[0].types){
-        cardType = $('<p>').text(deck[0].types[0]);
+function buildCard(card) {
+    const newCard = $('<div>').addClass('pokecard');
+    const cardImg = $('<img>').attr('src', card.images.small).addClass('cardImage');
+    const cardName = $('<p>').text(card.name).addClass('cardName');
+    const cardType = $('<p>');
+    if (card.types) {
+        cardType.text(card.types[0]);
     }
     const attacks = $('<div>').addClass('attacks');
-    if(deck[0].attacks){
-        for(let x = 0; x < deck[0].attacks.length; x++){
-            const cardAttack = $('<button>').addClass('atkBtn').text(deck[0].attacks[x].name);
+    if (card.attacks) {
+        for (let i = 0; i < card.attacks.length; i++) {
+            const cardAttack = $('<button>').addClass('atkBtn').text(card.attacks[i].name);
             attacks.append(cardAttack);
         }
-    }   
-    card.append(cardImg, cardName, cardType, attacks);
+    }
+    newCard.append(cardImg, cardName, cardType, attacks);
+    return newCard;
+}
+
+//draw a card from the users deck
+function drawCard() {
+    const deck = JSON.parse(localStorage.getItem('userDeck'));
+    const card = buildCard(deck[0]);
     $('#userHand').append(card);
     deck.shift();
+    localStorage.setItem('userDeck', JSON.stringify(deck));
 }
 
 $(document).ready(function () {
@@ -221,5 +230,5 @@ $(document).ready(function () {
     $("#grass").click(function () {
         beginPlay(grassDeck);
     });
-    
+
 });
