@@ -12,6 +12,7 @@ function getStoredDeck() {
     return JSON.parse(localStorage.getItem('userDeck'));
 }
 function getPokecards() {
+    $('#loading').text("the pokemon API is loading");
     $.ajax({
         url: 'https://api.pokemontcg.io/v2/cards?q=set.id:base1&orderBy=number',
         success: buildPokeDecks
@@ -20,6 +21,7 @@ function getPokecards() {
 
 //build a 60 card deck for each of the 4 main types: fire, water, lightning, grass
 function buildPokeDecks(res) {
+    $('#loading').text('');
     console.log("buildDeckRunnings");
     const allCards = res.data;
     let energy = 0;
