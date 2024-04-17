@@ -47,19 +47,23 @@
   align-self: flex-end;
 }
 
+#intro {
+  position: absolute;
+  bottom: 0%;
+  display: flex;
+  justify-content: center; /* Align horizontally */
+  align-items: center; /* Align vertically */
+  height: 100%;
+  width: 95%;
+  z-index: 5000;
+}
+
 html,
 body {
   height: 100%;
   margin: 0;
 }
 
-.container {
-  display: flex;
-  justify-content: center; /* Align horizontally */
-  align-items: center; /* Align vertically */
-  height: 100%;
-  width: 95%;
-}
 #animated-text {
   width: 70vw;
 }
@@ -142,21 +146,6 @@ body {
 /* ----------       Mobile Devices <= 600px S       ------------ */
 
 @media only screen and (max-width: 599px) {
-  #column {
-    flex-direction: column;
-  }
-  #landing {
-    margin: auto;
-    flex-direction: column;
-  }
-  #trainer-div {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-  }
-  #trainer {
-    width: 60%;
-  }
 }
 
 /* ----------       Tablet Devices > 600px M      ------------- */
@@ -167,14 +156,6 @@ body {
 /* ----------       Desktop Devices > 992px L     ------------- */
 
 @media only screen and (max-width: 992px) {
-  #game {
-    flex-direction: column;
-    margin-top: 18%;
-  }
-  .row .col.s5 {
-    margin: auto !important;
-    width: 65% !important;
-  }
 }
 
 /* ------       Large Desktop Devices > 1200px  XL      ------ */
