@@ -149,8 +149,11 @@
   position: absolute;
   right: -7%;
   top: 35%;
-  width: 30%;
-}
+  width: 30%;}
+
+#trashbox{
+  margin: 40px;
+  background-color: purlple;
 
 /* ============================================================ *\
 *      Media Queries (Alphabetical by screen size break          *
