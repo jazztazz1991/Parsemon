@@ -30,7 +30,6 @@ function getPokecards() {
 
 function sortCards(res) {
     allCards = res.data;
-    console.log(allCards)
     for (let card of allCards) {
         if (card.supertype === 'Pokémon') {
             if (card.types[0] === 'Colorless') {
@@ -58,8 +57,10 @@ function sortCards(res) {
             console.log('this card has no home: ' + card);
         }
     }
-    console.log(allCards)
-    console.log(sortedCards)
+    console.log("All Cards: ");
+    console.log(allCards);
+    console.log("Sorted Cards: ");
+    console.log(sortedCards);
 }
 
 $(document).ready(function () {
