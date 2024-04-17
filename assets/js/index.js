@@ -52,8 +52,7 @@ $(document).ready(function () {
     $("#animated-text").fadeOut();
     $("#continue-btn").prop("disabled", true);
     $("#close-btn").fadeOut(); // Hide the close button when closing the div
-    $("#landing").css("display", "none"); // Hide the landing text div
-    $("#trainer").css("display", "none"); // Hide the trainer image
+    $("#intro").css("display", "none"); // Hide the landing text div
   }
 
   animateText(texts[currentTextIndex]);
