@@ -21,7 +21,11 @@ const sortedCards = {
 function updateUserDeck(deck) {
     localStorage.setItem('userDeck', JSON.stringify(deck));
 }
-
+function getUserDeck() {
+    let stringDeck = localStorage.getItem('userDeck');
+    let parsedDeck = JSON.parse(stringDeck) || [];
+    return parsedDeck;
+}
 //fetch base1 set cards from pokemontcg api
 function getPokecards() {
     $('#loading').text("the pokemon API is loading");
@@ -67,45 +71,167 @@ function sortCards(res) {
     console.log(sortedCards);
 }
 
-//TODO: show cards to screen based off users selection
-$('').on('click', userSelection);
-
-function userSelection() {
-
+//TODO: show cards to screen based off users selection=
+$('#showCards').on('click', userSelection)
+function userSelection(event) {
+    event.preventDefault()
+    // const userSelected = $('#dropdown1').val();
+    const userSelected = 'Energy'
+    if (userSelected === 'Trainer') {
+        showTrainer();
+    } else if (userSelected === 'Energy') {
+        showEnergy();
+    } else if (userSelected === 'Pokemon') {
+        showPokemon();
+    } else {
+        console.log('Please select a card type')
+    }
 }
 
 function showTrainer() {
-
+    const cards = sortedCards.trainer;
+    console.log(cards)
+    for (let card of cards) {
+        const display = $('#deckBuilder');
+        const cardDiv = $('<div>').addClass('card').attr('data-cardid', card.id);
+        const imgDiv = $('<div>').addClass('card-image')
+        const cardImg = $('<img>').attr('src', card.images.small);
+        const infoTag = $('<span>').addClass('card-title')
+        const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
+        iTag.on('click', displayAdditionalInfo);
+        infoTag.append(iTag);
+        const aTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('add_circle');
+        aTag.on('click', isDeckFull);
+        infoTag.append(aTag);
+        imgDiv.append(cardImg, infoTag);
+        cardDiv.append(imgDiv);
+        display.append(cardDiv);
+    }
 }
 
 function showPokemon() {
+    const type = "Fire"
+    let sCards = [];
+    switch (type) {
+        case 'Colorless':
+            sCards = sortedCards.pokemon.colorless;
+            break;
+        case 'Fighting':
+            sCards = sortedCards.pokemon.fighting;
+            break;
+        case 'Fire':
+            sCards = sortedCards.pokemon.fire;
+            break;
+        case 'Grass':
+            sCards = sortedCards.pokemon.grass;
+            break;
+        case 'Lightning':
+            sCards = sortedCards.pokemon.lightning;
+            break;
+        case 'Psychic':
+            sCards = sortedCards.pokemon.psychic;
+            break;
+        case 'Water':
+            sCards = sortedCards.pokemon.water;
+            break;
+    }
 
+    for (let card of sCards) {
+        const display = $('#deckBuilder');
+        const cardDiv = $('<div>').addClass('card').attr('data-cardid', card.id);
+        const imgDiv = $('<div>').addClass('card-image')
+        const cardImg = $('<img>').attr('src', card.images.small);
+        const infoTag = $('<span>').addClass('card-title')
+        const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
+        iTag.on('click', displayAdditionalInfo);
+        infoTag.append(iTag);
+        const aTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('add_circle');
+        aTag.on('click', isDeckFull);
+        infoTag.append(aTag);
+        imgDiv.append(cardImg, infoTag);
+        cardDiv.append(imgDiv);
+        display.append(cardDiv);
+    }
 }
 
 function showEnergy() {
-
+    const cards = sortedCards.energy;
+    console.log(cards)
+    for (let card of cards) {
+        console.log(card.id)
+        const display = $('#deckBuilder');
+        const cardDiv = $('<div>').addClass('card').attr('data-cardid', card.id);
+        const imgDiv = $('<div>').addClass('card-image')
+        const cardImg = $('<img>').attr('src', card.images.small);
+        const infoTag = $('<span>').addClass('card-title')
+        const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
+        iTag.on('click', displayAdditionalInfo);
+        infoTag.append(iTag);
+        const aTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('add_circle');
+        aTag.on('click', isDeckFull);
+        infoTag.append(aTag);
+        imgDiv.append(cardImg, infoTag);
+        cardDiv.append(imgDiv);
+        display.append(cardDiv);
+    }
 }
 
 //TODO: display extra information on click of i icon
-$('').on('click', displayAdditionalInfo);
 
 function displayAdditionalInfo() {
-
+    console.log('additionalInfo')
+    console.log(this.dataset.cardid)
 }
 
 //TODO: get user deck from localStorage if avaible and show on screen
 function userDeckSidebar() {
-
+    const userDeck = getUserDeck();
+    $('#userDeck').empty();
+    for (let card of userDeck) {
+        const display = $('#userDeck');
+        const cardDiv = $('<div>').addClass('card').attr('data-cardid', card.id);
+        const imgDiv = $('<div>').addClass('card-image')
+        const cardImg = $('<img>').attr('src', card.images.small);
+        const infoTag = $('<span>').addClass('card-title')
+        const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
+        iTag.on('click', displayAdditionalInfo);
+        infoTag.append(iTag);
+        const aTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('add_circle');
+        aTag.on('click', isDeckFull);
+        infoTag.append(aTag);
+        imgDiv.append(cardImg, infoTag);
+        cardDiv.append(imgDiv);
+        display.append(cardDiv);
+    }
 }
 
 //TODO: Check if deck is full, Add card to deck, Add 1 to deck counter, Add card to userDeck localStorage, Update display deck side panel
-$('').on('click', isDeckFull);
 
 function isDeckFull() {
-
+    console.log('isDeckFull')
+    const id = this.dataset.cardid
+    const userDeck = getUserDeck();
+    if (userDeck.length <= 60) {
+        addToDeck(id)
+    } else {
+        console.log('your deck is full')
+    }
 }
 
-function addToDeck() {
+function addToDeck(id) {
+    console.log('addtodeck')
+    const usersDeck = getUserDeck();
+    let toBeAdded;
+    for (let card of allCards) {
+        if (id === card.id) {
+            toBeAdded = card;
+        }
+    }
+    console.log(toBeAdded)
+    usersDeck.push(toBeAdded);
+    console.log(usersDeck)
+    updateUserDeck(usersDeck);
+    userDeckSidebar();
 
 }
 
@@ -178,6 +304,7 @@ function playRound() {
 
 $(document).ready(function () {
     getPokecards();
+    userDeckSidebar();
 });
 
 
