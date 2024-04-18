@@ -183,6 +183,10 @@
   left: 10%;
 }
 
+#selected-cards {
+  border: 1px solid black;
+}
+
 #trainer {
   width: 45%;
 }
