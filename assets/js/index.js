@@ -1,4 +1,45 @@
 $(document).ready(function () {
+  $(".dropdown-trigger").dropdown();
+
+  $(".sidenav").sidenav();
+
+  // Function to randomly choose between two image sources
+  function getRandomImageSrc() {
+    var images = [
+      "./assets/images/cody-trainer.svg",
+      "./assets/images/mary-trainer.svg",
+    ];
+    var randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+  }
+
+  // Set the src attribute of #trainer-div with the randomly chosen image source
+  var randomImageSrc = getRandomImageSrc();
+  $("#trainer-div").html(
+    `<img src="${randomImageSrc}" alt="Trainer Image" id="trainer" />`
+  );
+
+  if (randomImageSrc === "./assets/images/mary-trainer.svg") {
+    $("#trainer").css({
+      bottom: "3%",
+      right: "-14%",
+    });
+  } else {
+    $("#trainer").css({ right: "-7%", bottom: "-17%" }); // Apply common CSS property for other images
+  }
+  // Check if the screen width is less than or equal to 599px
+  if (window.matchMedia("(max-width: 600px)").matches) {
+    if (randomImageSrc === "./assets/images/mary-trainer.svg") {
+      $("#trainer").css({ bottom: "62%", right: "unset" });
+    } else {
+      $("#trainer").css({
+        bottom: "62%",
+        width: "40%",
+        right: "unset", // Add right: unset
+      });
+    }
+  }
+
   var texts = [
     "Greetings!! Welcome to Parsemon, a random card duel game for Pokemon enthusiasts...",
     "Click the 'draw' button to draw a card and start the game. Good luck, trainers!!",
@@ -59,42 +100,4 @@ $(document).ready(function () {
 
   $("#continue-btn").on("click", nextText);
   $("#close-btn").on("click", closeDiv); // Event listener for the close button
-});
-$(document).ready(function () {
-  // Function to randomly choose between two image sources
-  function getRandomImageSrc() {
-    var images = [
-      "./assets/images/cody-trainer.svg",
-      "./assets/images/mary-trainer.svg",
-    ];
-    var randomIndex = Math.floor(Math.random() * images.length);
-    return images[randomIndex];
-  }
-
-  // Set the src attribute of #trainer-div with the randomly chosen image source
-  var randomImageSrc = getRandomImageSrc();
-  $("#trainer-div").html(
-    `<img src="${randomImageSrc}" alt="Trainer Image" id="trainer"/>`
-  );
-
-  if (randomImageSrc === "./assets/images/mary-trainer.svg") {
-    $("#trainer").css({
-      bottom: "3%",
-      right: "-14%",
-    });
-  } else {
-    $("#trainer").css({ right: "-7%", bottom: "-17%" }); // Apply common CSS property for other images
-  }
-  // Check if the screen width is less than or equal to 599px
-  if (window.matchMedia("(max-width: 600px)").matches) {
-    if (randomImageSrc === "./assets/images/mary-trainer.svg") {
-      $("#trainer").css({ bottom: "62%", right: "unset" });
-    } else {
-      $("#trainer").css({
-        bottom: "62%",
-        width: "40%",
-        right: "unset", // Add right: unset
-      });
-    }
-  }
 });

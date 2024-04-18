@@ -177,3 +177,5 @@ Project Links:
 ## Acknowledgments
 
 Mary would like to give a big shoutout to my partner in crime and daughter, Yennefer! Every day she proves she is small yet mighty! She would also like to thank all of her students in the Spring 2024 UCF Full Stack Bootcamp for being a fantastic cohort!
+
+UI example - https://raw.githubusercontent.com/FL-/Essentials-SetControls/main/Screens/gif.gif
