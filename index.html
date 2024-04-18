@@ -44,83 +44,44 @@
 			</a>
 		</div>
 
-		<ul id="slide-out" class="sidenav">
-			<a href="./index.html"><li>Home</li></a>
-			<div class="divider"></div>
-			<a href="./about.html"><li>About</li></a>
-			<a href="./builder.html"><li>Deck Builder</li></a>
-		</ul>
-		<!-- End of Navbar -->
+    <ul id="slide-out" class="sidenav">
+      <a href="./index.html"><li>Home</li></a>
+      <div class="divider"></div>
+      <a href="./about.html"><li>About</li></a>
+      <a href="./game.html"><li>Random Battle</li></a>
+      <a href="./builder.html"><li>Deck Builder</li></a>
+    </ul>
+    <!-- End of Navbar -->
 
-		<!-- Game container -->
-		<div id="game" class="row flexbox-turn-on">
-			<!-- Player container -->
-			<div id="player" class="col s12 flexbox-turn-on player-box">
-				<div class="row">
-					<div class="col s6">
-						<div class="deck-stack container">
-							<img
-								src="./assets/images/card-back.png"
-								alt="deck of pokemon cards"
-								class="poke-deck"
-							/>
-
-							<img
-								src="./assets/images/card-back.png"
-								alt="deck of pokemon cards"
-								class="poke-deck card-children"
-							/>
-
-							<img
-								src="./assets/images/card-back.png"
-								alt="deck of pokemon cards"
-								class="poke-deck card-children"
-							/>
-							<img
-								src="./assets/images/card-back.png"
-								alt="deck of pokemon cards"
-								class="poke-deck card-children"
-							/>
-						</div>
-					</div>
-					<div class="col s6">
-						<img
-							src="./assets/images/card1.png"
-							alt="venosaur pokemon card"
-							class="current-card played-card"
-							id="player-card"
-						/>
-					</div>
-				</div>
-			</div>
-			<!-- End of player -->
-
-			<!-- Rival container -->
-			<div id="rival" class="col s12 flexbox-turn-on player-box">
-				<img
-					src="./assets/images/card2.png"
-					alt="chespin pokemon card"
-					class="current-card played-card"
-					id="rival-card"
-				/>
-				<div class="deck-stack" id="right-deck">
-					<img
-						src="./assets/images/card-back.png"
-						alt="deck of pokemon cards"
-						class="poke-deck"
-					/>
-				</div>
-			</div>
-		</div>
-		<!-- Socket.io CDN -->
-		<!-- <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script> -->
-		<!-- jQuery CDN -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<!-- Materialize JavaScript CDN -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-		<!-- Local script -->
-		<script src="./assets/js/pokemon.js"></script>
-
-		<script src="./assets/js/index.js"></script>
-	</body>
+    <div class="container" id="intro">
+      <div class="flexbox-turn-on" id="landing">
+        <div id="animated-text" class="flow-text"></div>
+        <button id="continue-btn" class="btn waves-effect waves-light btn-pop">
+          <img
+            src="./assets/images/down-arrow.svg"
+            alt="down arrow for continue functionality"
+            class="buttons"
+          />
+        </button>
+        <button
+          id="close-btn"
+          class="btn waves-effect waves-light btn-pop"
+          style="display: none"
+        >
+          <span class="material-icons buttons"> close </span>
+        </button>
+      </div>
+      <div id="trainer-div"></div>
+    </div>
+    <!-- Socket.io CDN -->
+    <!-- <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script> -->
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Materialize JavaScript CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Local script -->
+    <script src="./assets/js/pokemon.js"></script>
+    <script src="./assets/js/index.js"></script>
+    <script src="./assets/js/dialogue.js"></script>
+  </body>
 </html>
