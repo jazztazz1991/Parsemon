@@ -12,7 +12,8 @@ const sortedCards = {
         grass: [],
         lightning: [],
         psychic: [],
-        water: []
+        water: [],
+        all: []
 
     },
     energy: []
@@ -40,6 +41,7 @@ function sortCards(res) {
     allCards = res.data;
     for (let card of allCards) {
         if (card.supertype === 'Pokémon') {
+            sortedCards.pokemon.all.push(card)
             if (card.types[0] === 'Colorless') {
                 sortedCards.pokemon.colorless.push(card)
             } else if (card.types[0] === 'Fighting') {
@@ -72,16 +74,15 @@ function sortCards(res) {
 }
 
 //TODO: show cards to screen based off users selection=
-$('#showCards').on('click', userSelection)
+$('#submitBtn').on('click', userSelection)
 function userSelection(event) {
     event.preventDefault()
-    // const userSelected = $('#dropdown1').val();
-    const userSelected = 'Energy'
-    if (userSelected === 'Trainer') {
+    const userSelected = $('#category').val();
+    if (userSelected === 'trainer') {
         showTrainer();
-    } else if (userSelected === 'Energy') {
+    } else if (userSelected === 'energy') {
         showEnergy();
-    } else if (userSelected === 'Pokemon') {
+    } else if (userSelected === 'pokemon') {
         showPokemon();
     } else {
         console.log('Please select a card type')
@@ -91,6 +92,7 @@ function userSelection(event) {
 function showTrainer() {
     const cards = sortedCards.trainer;
     console.log(cards)
+    $('#deckBuilder').empty();
     for (let card of cards) {
         const display = $('#deckBuilder');
         const cardDiv = $('<div>').addClass('card').attr('data-cardid', card.id);
@@ -110,28 +112,29 @@ function showTrainer() {
 }
 
 function showPokemon() {
-    const type = "Fire"
+    const type = $('#pokemonType').val();
     let sCards = [];
+    $('#deckBuilder').empty();
     switch (type) {
-        case 'Colorless':
+        case 'colorless':
             sCards = sortedCards.pokemon.colorless;
             break;
-        case 'Fighting':
+        case 'fighting':
             sCards = sortedCards.pokemon.fighting;
             break;
-        case 'Fire':
+        case 'fire':
             sCards = sortedCards.pokemon.fire;
             break;
-        case 'Grass':
+        case 'grass':
             sCards = sortedCards.pokemon.grass;
             break;
-        case 'Lightning':
+        case 'lightning':
             sCards = sortedCards.pokemon.lightning;
             break;
-        case 'Psychic':
+        case 'psychic':
             sCards = sortedCards.pokemon.psychic;
             break;
-        case 'Water':
+        case 'water':
             sCards = sortedCards.pokemon.water;
             break;
     }
@@ -157,6 +160,7 @@ function showPokemon() {
 function showEnergy() {
     const cards = sortedCards.energy;
     console.log(cards)
+    $('#deckBuilder').empty();
     for (let card of cards) {
         console.log(card.id)
         const display = $('#deckBuilder');
@@ -186,9 +190,10 @@ function displayAdditionalInfo() {
 //TODO: get user deck from localStorage if avaible and show on screen
 function userDeckSidebar() {
     const userDeck = getUserDeck();
-    $('#userDeck').empty();
+    let position = 0;
+    $('#selected-cards').empty();
     for (let card of userDeck) {
-        const display = $('#userDeck');
+        const display = $('#selected-cards');
         const cardDiv = $('<div>').addClass('card').attr('data-cardid', card.id);
         const imgDiv = $('<div>').addClass('card-image')
         const cardImg = $('<img>').attr('src', card.images.small);
@@ -196,12 +201,13 @@ function userDeckSidebar() {
         const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
         iTag.on('click', displayAdditionalInfo);
         infoTag.append(iTag);
-        const aTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('add_circle');
-        aTag.on('click', isDeckFull);
+        const aTag = $('<button>').addClass('material-icons').attr('data-position', position).text('remove_circle');
+        aTag.on('click', removeCard);
         infoTag.append(aTag);
         imgDiv.append(cardImg, infoTag);
         cardDiv.append(imgDiv);
         display.append(cardDiv);
+        position++;
     }
 }
 
@@ -211,7 +217,7 @@ function isDeckFull() {
     console.log('isDeckFull')
     const id = this.dataset.cardid
     const userDeck = getUserDeck();
-    if (userDeck.length <= 60) {
+    if (userDeck.length < 60) {
         addToDeck(id)
     } else {
         console.log('your deck is full')
@@ -236,15 +242,17 @@ function addToDeck(id) {
 }
 
 //TODO: On click remove the card from the deck, update localStorage, 
-$('').on('click', removeCard);
-
 function removeCard() {
-
+    let cardPosition = this.dataset.position;
+    let usersDeck = getUserDeck();
+    if (cardPosition) {
+        usersDeck.splice(cardPosition, 1);
+    }
+    updateUserDeck(usersDeck);
+    userDeckSidebar();
 }
 
-//TODO: On click show cards additional information 
-$('').on('click', additionalInfo);
-
+//TODO: On click show cards additional information
 function additionalInfo() {
 
 }
@@ -257,7 +265,7 @@ let player1Health = 5;
 let player2Health = 5;
 //TODO: Math.random for which users selects coin flip
 function whoFlips() {
-
+    let rand = Math.round(Math.random())
 }
 
 //TODO: coin flip for who goes first
@@ -276,14 +284,22 @@ $.ajax(settings).done(function (response) {
     console.log(response);
 });
 
+function buildPlayerDeck() {
+    let playerDeck = [];
+    for (let i = 0; i < 60; i++) {
+        let rand = Math.floor(Math.random() * sortedCards.pokemon.all.length);
+        playerDeck.push(sortedCards.pokemon.all[rand]);
+    }
+    return playerDeck;
+}
 //TODO: Create player deck for player 1
 function player1Start() {
-
+    let player1Deck = buildPlayerDeck();
 }
 
 //TODO: Create player deck for player 2
 function player2Start() {
-
+    let player2Deck = buildPlayerDeck();
 }
 
 //TODO: PLAYER 1 - On click to play card. pull card from deck. display card pass turn to player 2
