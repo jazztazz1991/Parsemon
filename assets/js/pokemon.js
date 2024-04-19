@@ -199,28 +199,41 @@ $(document).ready(function () {
       .attr("data-cardid", card.id);
     const imgDiv = $("<div>").addClass("card-image");
     const cardImg = $("<img>");
+
+    // Setting the source of the card image
     if (card.images && card.images.small) {
       cardImg.attr("src", card.images.small);
     } else {
-      cardImg.attr("src", "./assets/images/paceholder.jpeg"); // Provide a fallback image or handle the case accordingly
+      cardImg.attr("src", "./assets/images/paceholder.jpeg");
     }
+
+    // Creating the button div and buttons
+    const btnDiv = $("<div>").addClass("btn-div");
     const addBtn = $("<button>")
-      .addClass("material-icons add-to-deck card-btn")
+      .addClass("material-icons add-to-deck card-btn ls-btn")
       .attr("data-cardid", card.id)
       .text("add_circle")
       .on("click", function () {
         addToSelectedCards(card);
       });
     const removeBtn = $("<button>")
-      .addClass("material-icons remove-from-deck card-btn")
+      .addClass("material-icons remove-from-deck card-btn ls-btn")
       .attr("data-cardid", card.id)
       .text("remove_circle")
       .on("click", function () {
         removeFromSelectedCards(card);
       });
-    imgDiv.append(cardImg);
-    cardImg.append(addBtn, removeBtn);
+
+    // Appending buttons to the button div
+    btnDiv.append(addBtn, removeBtn);
+
+    // Appending button div to the image div
+    imgDiv.append(cardImg, btnDiv);
+
+    // Appending the image div and button div to the card div
     cardDiv.append(imgDiv);
+
+    // Appending the card div to the display
     display.append(cardDiv);
   }
   // Function to display a card
