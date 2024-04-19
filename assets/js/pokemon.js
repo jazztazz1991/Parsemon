@@ -99,7 +99,7 @@ function showTrainer() {
         const imgDiv = $('<div>').addClass('card-image')
         const cardImg = $('<img>').attr('src', card.images.small);
         const infoTag = $('<span>').addClass('card-title')
-        const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
+        const iTag = $('<button>').addClass('material-icons modal-trigger').attr('data-cardid', card.id).attr('href', '#infoModal').text('info');
         iTag.on('click', displayAdditionalInfo);
         infoTag.append(iTag);
         const aTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('add_circle');
@@ -137,6 +137,9 @@ function showPokemon() {
         case 'water':
             sCards = sortedCards.pokemon.water;
             break;
+        case 'all':
+            sCards = sortedCards.pokemon.all;
+            break;
     }
 
     for (let card of sCards) {
@@ -145,7 +148,7 @@ function showPokemon() {
         const imgDiv = $('<div>').addClass('card-image')
         const cardImg = $('<img>').attr('src', card.images.small);
         const infoTag = $('<span>').addClass('card-title')
-        const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
+        const iTag = $('<button>').addClass('material-icons modal-trigger').attr('data-cardid', card.id).attr('href', '#infoModal').text('info');
         iTag.on('click', displayAdditionalInfo);
         infoTag.append(iTag);
         const aTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('add_circle');
@@ -168,7 +171,7 @@ function showEnergy() {
         const imgDiv = $('<div>').addClass('card-image')
         const cardImg = $('<img>').attr('src', card.images.small);
         const infoTag = $('<span>').addClass('card-title')
-        const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
+        const iTag = $('<button>').addClass('material-icons modal-trigger').attr('data-cardid', card.id).attr('href', '#infoModal').text('info');
         iTag.on('click', displayAdditionalInfo);
         infoTag.append(iTag);
         const aTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('add_circle');
@@ -183,8 +186,21 @@ function showEnergy() {
 //TODO: display extra information on click of i icon
 
 function displayAdditionalInfo() {
-    console.log('additionalInfo')
-    console.log(this.dataset.cardid)
+    let cardid = this.dataset.cardid
+    let card;
+    for (let cards of allCards) {
+        if (cardid === cards.id) {
+            card = cards
+        }
+    }
+    $('#infoImg').attr('src', card.images.large)
+    let modal = `<div id="infoModal" class="modal">
+    <div class="modal-content">
+      <img href="#!" class="modal-close" src=${card.images.large}>
+    </div>
+  </div>`
+    $('#cardModal').append(modal)
+
 }
 
 //TODO: get user deck from localStorage if avaible and show on screen
@@ -198,7 +214,7 @@ function userDeckSidebar() {
         const imgDiv = $('<div>').addClass('card-image')
         const cardImg = $('<img>').attr('src', card.images.small);
         const infoTag = $('<span>').addClass('card-title')
-        const iTag = $('<button>').addClass('material-icons').attr('data-cardid', card.id).text('info');
+        const iTag = $('<button>').addClass('material-icons modal-trigger').attr('data-cardid', card.id).attr('href', '#infoModal').text('info');
         iTag.on('click', displayAdditionalInfo);
         infoTag.append(iTag);
         const aTag = $('<button>').addClass('material-icons').attr('data-position', position).text('remove_circle');
@@ -252,10 +268,6 @@ function removeCard() {
     userDeckSidebar();
 }
 
-//TODO: On click show cards additional information
-function additionalInfo() {
-
-}
 
 //==================================================================
 //Pokemon War!
@@ -266,6 +278,11 @@ let player2Health = 5;
 //TODO: Math.random for which users selects coin flip
 function whoFlips() {
     let rand = Math.round(Math.random())
+    if (rand === 0) {
+        player1Start();
+    } else {
+        player2Start();
+    }
 }
 
 //TODO: coin flip for who goes first
@@ -279,10 +296,21 @@ const settings = {
         'X-RapidAPI-Host': 'coin-flip1.p.rapidapi.com'
     }
 };
+let coinSide;
+let currentPlayer;
 
 $.ajax(settings).done(function (response) {
-    console.log(response);
+    coinSide = response.outcome
 });
+function chooseSide(player) {
+    let side = $('').val();
+
+    if (side === coinSide) {
+        return true;
+    } else {
+        return false
+    }
+}
 
 function buildPlayerDeck() {
     let playerDeck = [];
@@ -293,34 +321,51 @@ function buildPlayerDeck() {
     return playerDeck;
 }
 //TODO: Create player deck for player 1
+let player1Deck;
 function player1Start() {
-    let player1Deck = buildPlayerDeck();
+    player1Deck = buildPlayerDeck();
+    localStorage.setItem('player1Deck', player1Deck);
+    chooseSide(0);
 }
 
 //TODO: Create player deck for player 2
+let player2Deck;
 function player2Start() {
-    let player2Deck = buildPlayerDeck();
+    player2Deck = buildPlayerDeck();
+    localStorage.setItem('player2Deck', player2Deck);
+    chooseSide(1);
 }
 
 //TODO: PLAYER 1 - On click to play card. pull card from deck. display card pass turn to player 2
 $('').on('click', player1Card);
+let play1Card;
 function player1Card() {
+    play1Card = player1Card[0];
 
 }
 
 //TODO: PLAYER 1 - On click to play card. pull card from deck. display card. play round
 $('').on('click', player2Card);
+let play2Card;
 function player2Card() {
-
+    play2Card = player2Card[0];
 }
 
 function playRound() {
+    if (play1Card.types === play2Card.weaknesses[0].type) {
+        player2Health--;
+    } else if (play2Card.types === play1Card.weaknesses[0].type) {
+        player1Helath--;
+    } else {
+        console.log('no winner. redraw');
+    }
 
 }
 
 $(document).ready(function () {
     getPokecards();
     userDeckSidebar();
+    $('.modal').modal();
 });
 
 
