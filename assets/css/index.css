@@ -31,7 +31,7 @@
 }
 
 .current-card {
-  width: 100%;
+  width: 55%;
 }
 
 .deck {
@@ -90,6 +90,7 @@
 
 .player-box {
   align-items: center;
+  padding: 10%;
 }
 
 .played-card {
@@ -141,8 +142,12 @@
 }
 
 #game {
+  display: flex;
   justify-content: center;
   flex-direction: column;
+  background-image: url("../images/tabletop.jpg");
+  background-size: inherit;
+  background-repeat: no-repeat;
 }
 
 #hamb {
