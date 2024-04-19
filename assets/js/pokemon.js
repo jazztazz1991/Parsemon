@@ -13,11 +13,13 @@ const sortedCards = {
         lightning: [],
         psychic: [],
         water: [],
-        all: []
+        all: [],
+        duel: []
 
     },
     energy: []
 }
+
 
 function updateUserDeck(deck) {
     localStorage.setItem('userDeck', JSON.stringify(deck));
@@ -46,16 +48,22 @@ function sortCards(res) {
                 sortedCards.pokemon.colorless.push(card)
             } else if (card.types[0] === 'Fighting') {
                 sortedCards.pokemon.fighting.push(card)
+                sortedCards.pokemon.duel.push(card)
             } else if (card.types[0] === 'Fire') {
                 sortedCards.pokemon.fire.push(card)
+                sortedCards.pokemon.duel.push(card)
             } else if (card.types[0] === 'Grass') {
                 sortedCards.pokemon.grass.push(card)
+                sortedCards.pokemon.duel.push(card)
             } else if (card.types[0] === 'Lightning') {
                 sortedCards.pokemon.lightning.push(card)
+                sortedCards.pokemon.duel.push(card)
             } else if (card.types[0] === 'Psychic') {
                 sortedCards.pokemon.psychic.push(card)
+                sortedCards.pokemon.duel.push(card)
             } else if (card.types[0] === 'Water') {
                 sortedCards.pokemon.water.push(card)
+                sortedCards.pokemon.duel.push(card)
             } else {
                 console.log('No pokemon array for type: ' + card.types[0])
             }
@@ -275,13 +283,35 @@ let player1Type;
 let player2Type;
 let player1Health = 5;
 let player2Health = 5;
+let side;
+let play1Card;
+let play2Card;
+let coinSide;
+let currentPlayer;
+let firstPlayer;
+let secondPlayer;
+let player1Deck;
+let player2Deck;
 //TODO: Math.random for which users selects coin flip
 function whoFlips() {
     let rand = Math.round(Math.random())
     if (rand === 0) {
         player1Start();
+        $('#playerChoosing').text('Player flips');
     } else {
         player2Start();
+        $('#playerChoosing').text('Rival flips');
+        const displayButton = $('#flipCoin');
+        const btnHeads = $('<button>').text('Heads').attr('href', '#!').addClass('modal-close').on('click', function () {
+            side = 'Heads';
+            chooseSide('#player-draw', '#rival-draw');
+        });
+        const btnTails = $('<button>').text('Tails').attr('href', '#!').addClass('modal-close').on('click', function () {
+            side = 'Tails';
+            chooseSide('#rival-draw', '#player-draw');
+        })
+        displayButton.empty();
+        displayButton.append(btnHeads, btnTails)
     }
 }
 
@@ -296,76 +326,145 @@ const settings = {
         'X-RapidAPI-Host': 'coin-flip1.p.rapidapi.com'
     }
 };
-let coinSide;
-let currentPlayer;
 
 $.ajax(settings).done(function (response) {
     coinSide = response.outcome
 });
-function chooseSide(player) {
-    let side = $('').val();
-
+function chooseSide(player1, player2) {
+    $(player1).removeClass('disabled')
+    $(player2).removeClass('disabled')
     if (side === coinSide) {
-        return true;
+        firstPlayer = player1
+        secondPlayer = player2
+        play1Card = '';
+        play2card = '';
+        console.log(play1Card)
+        console.log(play2Card)
+        $(player2).addClass('disabled')
+
     } else {
-        return false
+        firstPlayer = player2
+        secondPlayer = player1
+        play1Card = '';
+        play2card = '';
+        console.log(play1Card)
+        console.log(play2Card)
+        $(player1).addClass('disabled')
     }
 }
 
 function buildPlayerDeck() {
     let playerDeck = [];
     for (let i = 0; i < 60; i++) {
-        let rand = Math.floor(Math.random() * sortedCards.pokemon.all.length);
-        playerDeck.push(sortedCards.pokemon.all[rand]);
+        let rand = Math.floor(Math.random() * sortedCards.pokemon.duel.length);
+        playerDeck.push(sortedCards.pokemon.duel[rand]);
     }
     return playerDeck;
 }
 //TODO: Create player deck for player 1
-let player1Deck;
 function player1Start() {
     player1Deck = buildPlayerDeck();
     localStorage.setItem('player1Deck', player1Deck);
-    chooseSide(0);
 }
 
 //TODO: Create player deck for player 2
-let player2Deck;
 function player2Start() {
     player2Deck = buildPlayerDeck();
     localStorage.setItem('player2Deck', player2Deck);
-    chooseSide(1);
 }
 
 //TODO: PLAYER 1 - On click to play card. pull card from deck. display card pass turn to player 2
-$('').on('click', player1Card);
-let play1Card;
 function player1Card() {
-    play1Card = player1Card[0];
+    if (player1Deck) {
+        play1Card = player1Deck[0];
+        player1Deck.shift();
+        $('#player-card').attr('src', play1Card.images.large)
+        if (play2Card) {
+            playRound()
+        } else {
+            $('#player-draw').addClass('disabled');
+            $('#rival-draw').removeClass('disabled');
 
+        }
+    } else {
+        player1Start();
+        player1Card();
+    }
 }
 
 //TODO: PLAYER 1 - On click to play card. pull card from deck. display card. play round
-$('').on('click', player2Card);
-let play2Card;
 function player2Card() {
-    play2Card = player2Card[0];
+    if (player2Deck) {
+        play2Card = player2Deck[0];
+        player2Deck.shift();
+        $('#rival-card').attr('src', play2Card.images.large)
+        if (play1Card) {
+            playRound()
+        } else {
+            $('#rival-draw').addClass('disabled');
+            $('#player-draw').removeClass('disabled');
+        }
+    } else {
+        player2Start();
+        player2Card();
+    }
 }
 
 function playRound() {
-    if (play1Card.types === play2Card.weaknesses[0].type) {
+    if (play1Card.weaknesses && play2Card.weaknesses) {
+        if (play1Card.types[0] === play2Card.weaknesses[0].type) {
+            player2Health--;
+            console.log('Player Health: ' + player1Health);
+            console.log('Rival Health: ' + player2Health);
+            if (player2Health > 0) {
+                chooseSide(firstPlayer, secondPlayer)
+            }
+        } else if (play2Card.types[0] === play1Card.weaknesses[0].type) {
+            player1Health--;
+            console.log('Player Health: ' + player1Health);
+            console.log('Rival Health: ' + player2Health);
+            if (player1Health > 0) {
+                chooseSide(firstPlayer, secondPlayer)
+            }
+        } else {
+            console.log('no winner. redraw');
+            console.log('Player Health: ' + player1Health);
+            console.log('Rival Health: ' + player2Health);
+            chooseSide(firstPlayer)
+        }
+    } else if (play1Card.weaknesses && !play2Card.weaknesses) {
+        player1Health--;
+        console.log('Player Health: ' + player1Health);
+        console.log('Rival Health: ' + player2Health);
+        if (player1Health > 0) {
+            chooseSide(firstPlayer, secondPlayer)
+        }
+    } else if (!play1Card.weaknesses && play2Card.weaknesses) {
         player2Health--;
-    } else if (play2Card.types === play1Card.weaknesses[0].type) {
-        player1Helath--;
+        console.log('Player Health: ' + player1Health);
+        console.log('Rival Health: ' + player2Health);
+        if (player2Health > 0) {
+            chooseSide(firstPlayer, secondPlayer)
+        }
     } else {
-        console.log('no winner. redraw');
+        player1Health--;
+        player2Health--;
+        console.log('Player Health: ' + player1Health);
+        console.log('Rival Health: ' + player2Health);
+        if (player1Health > 0 && player2Health > 0) {
+            chooseSide(firstPlayer, secondPlayer);
+        }
     }
 
 }
+
 
 $(document).ready(function () {
     getPokecards();
     userDeckSidebar();
     $('.modal').modal();
+    $('#player-draw').on('click', player1Card);
+    $('#rival-draw').on('click', player2Card);
 });
 
 

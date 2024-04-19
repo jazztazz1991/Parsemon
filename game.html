@@ -60,84 +60,104 @@
               class="poke-deck"
             />
 
-            <img
-              src="./assets/images/card-back.png"
-              alt="deck of pokemon cards"
-              class="poke-deck card-children"
-            />
+			<button class="modal-trigger" href="#coinModal">Begin Play</button>
+			<div id="gameModal">
+				<div id="coinModal" class="modal">
+					<div class="modal-content">
+						<h3>Who will choose head or tails? (Player or Rival)</h3>
+						<button id="pickPlayer" onClick="whoFlips()">Pick randomly</button>
+						<h3 id="playerChoosing"></h3>
+						<div id="flipCoin"></div>
+					</div>
+				</div>
+			</div>
+			<div id="player" class="row flexbox-turn-on player-box">
+				<div class="col s6">
+					<div class="deck-stack container" id="player-draw">
+						<img
+							src="./assets/images/card-back.png"
+							alt="deck of pokemon cards"
+							class="poke-deck"
+						/>
 
-            <img
-              src="./assets/images/card-back.png"
-              alt="deck of pokemon cards"
-              class="poke-deck card-children"
-            />
-            <img
-              src="./assets/images/card-back.png"
-              alt="deck of pokemon cards"
-              class="poke-deck card-children"
-            />
-          </div>
-        </div>
-        <div class="col s6">
-          <img
-            src="./assets/images/card1.png"
-            alt="venosaur pokemon card"
-            class="current-card played-card"
-            id="player-card"
-          />
-        </div>
-      </div>
-      <!-- End of player -->
+						<img
+							src="./assets/images/card-back.png"
+							alt="deck of pokemon cards"
+							class="poke-deck card-children"
+						/>
 
-      <!-- Rival container -->
-      <div id="rival" class="row flexbox-turn-on player-box">
-        <div class="col s6">
-          <img
-            src="./assets/images/card2.png"
-            alt="chespin pokemon card"
-            class="current-card played-card"
-            id="rival-card"
-          />
-        </div>
-        <div class="col s6">
-          <div class="deck-stack container" id="rival-draw">
-            <img
-              src="./assets/images/card-back.png"
-              alt="deck of pokemon cards"
-              class="poke-deck"
-            />
+						<img
+							src="./assets/images/card-back.png"
+							alt="deck of pokemon cards"
+							class="poke-deck card-children"
+						/>
+						<img
+							src="./assets/images/card-back.png"
+							alt="deck of pokemon cards"
+							class="poke-deck card-children"
+						/>
+					</div>
+				</div>
+				<div class="col s6">
+					<img
+						src="./assets/images/card1.png"
+						alt="venosaur pokemon card"
+						class="current-card played-card"
+						id="player-card"
+					/>
+				</div>
+			</div>
+			<!-- End of player -->
 
-            <img
-              src="./assets/images/card-back.png"
-              alt="deck of pokemon cards"
-              class="poke-deck card-children"
-            />
+			<!-- Rival container -->
+			<div id="rival" class="row flexbox-turn-on player-box">
+				<div class="col s6">
+					<img
+						src="./assets/images/card2.png"
+						alt="chespin pokemon card"
+						class="current-card played-card"
+						id="rival-card"
+					/>
+				</div>
+				<div class="col s6">
+					<div class="deck-stack container" id="rival-draw">
+						<img
+							src="./assets/images/card-back.png"
+							alt="deck of pokemon cards"
+							class="poke-deck"
+						/>
 
-            <img
-              src="./assets/images/card-back.png"
-              alt="deck of pokemon cards"
-              class="poke-deck card-children"
-            />
-            <img
-              src="./assets/images/card-back.png"
-              alt="deck of pokemon cards"
-              class="poke-deck card-children"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+						<img
+							src="./assets/images/card-back.png"
+							alt="deck of pokemon cards"
+							class="poke-deck card-children"
+						/>
 
-    <div id="gameBoard"></div>
-    <!-- Socket.io CDN -->
-    <!-- <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script> -->
-    <!-- jQuery CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Materialize JavaScript CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- Local script -->
-    <script src="./assets/js/pokemon.js"></script>
+						<img
+							src="./assets/images/card-back.png"
+							alt="deck of pokemon cards"
+							class="poke-deck card-children"
+						/>
+						<img
+							src="./assets/images/card-back.png"
+							alt="deck of pokemon cards"
+							class="poke-deck card-children"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <script src="./assets/js/index.js"></script>
-  </body>
+		<div id="gameBoard"></div>
+		<!-- Socket.io CDN -->
+		<!-- <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script> -->
+		<!-- jQuery CDN -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- Materialize JavaScript CDN -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<!-- Local script -->
+		<script src="./assets/js/pokemon.js"></script>
+
+		<script src="./assets/js/index.js"></script>
+	</body>
 </html>
