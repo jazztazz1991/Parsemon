@@ -26,6 +26,11 @@
   width: 20px;
 }
 
+.card-btn {
+  position: absolute;
+  z-index: 500;
+}
+
 .card-children {
   position: absolute;
 }

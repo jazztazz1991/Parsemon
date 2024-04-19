@@ -34,7 +34,7 @@ if (window.matchMedia("(max-width: 600px)").matches) {
 }
 
 var texts = [
-  "Greetings!! Welcome to Parsemon, a random card duel game and deck builder for Pokemon enthusiasts...",
+  "Greetings!! Welcome to Parsemon, a random card duel game and deck builder for Pokemon enthusiasts! (Click the arrow to continue...)",
   "To begin, open the navigation and select between the 'Random Battle' and 'Deck Builder' options...",
 ];
 var currentTextIndex = 0;

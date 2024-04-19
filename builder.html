@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">\
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -57,13 +57,6 @@
         <li>Deck Builder</li>
       </a>
     </ul>
-    		<div>
-			<button id="showCards">Show Cards</button>
-			<p id="deckCount"></p>
-			<div id="deckBuilder"></div>
-			<p>==========================================================</p>
-			<div id="userDeck"></div>
-		</div>
     <div class="row">
       <div class="col s9">
         <!-- Dropdown -->
@@ -74,6 +67,7 @@
               <option value="pokemon">Pokemon</option>
               <option value="energy">Energy</option>
             </select>
+            <label>Select Category</label>
           </div>
 
           <!-- Pokemon Type Dropdown (Hidden by default) -->
@@ -92,27 +86,34 @@
                 <option value="fairy">Fairy</option>
                 <option value="dragon">Dragon</option>
               </select>
+              <label>Select Pokemon Type</label>
             </div>
           </div>
 
-          <div class="col s4">
-            <button id="submitBtn" class="btn">Submit</button>
-          </div>
+          \
         </div>
         <div class="row">
-          <!-- TODO- repeat this in JS w/ API pull -->
-
-          <div class="col s6 m4 l2">Cards will go here</div>
+          <div id="deckBuilder" class="col s12">
+            <!-- Cards will go here -->
+          </div>
         </div>
       </div>
       <div class="col s3">
         <div class="row">
-          <!-- TODO- repeat this in JS w/ localstorage -->
-          <div class="col s12" id="selected-cards">Selected card</div>
+          <div class="col s12" id="selected-cards">
+            <!-- Selected cards will go here -->
+          </div>
         </div>
       </div>
     </div>
-
+    <div id="loadingModal" class="modal">
+      <div class="modal-content">
+        <h4>Loading...</h4>
+        <div class="progress">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+    </div>
     <!-- End of Navbar -->
     <!-- Socket.io CDN -->
     <!-- <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script> -->
@@ -122,8 +123,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Local script -->
     <script src="./assets/js/pokemon.js"></script>
-
     <script src="./assets/js/index.js"></script>
-    <script src="./assets/js/builder.js"></script>
   </body>
 </html>
