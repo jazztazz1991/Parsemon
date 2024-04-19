@@ -1,65 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>War Game</title>
-    <!-- Google fonts CDN -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Google icons CDN -->
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <!-- Materialize CSS CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <!-- Local styles -->
-    <link rel="stylesheet" href="./assets/css/index.css" />
-    <link rel="stylesheet" href="./assets/css/animation.css" />
-  </head>
-  <body>
-    <!-- Navbar -->
-    <div id="nav-full">
-      <a href="#" data-target="slide-out" class="sidenav-trigger" id="logo">
-        <div id="logo-container">
-          <img
-            src="./assets/images/logo-main.svg"
-            id="main"
-            alt="Parsemon Logo"
-          />
-          <img
-            src="./assets/images/logo-shadow.svg"
-            id="shadow"
-            alt="Parsemon Logo shadow for hover animation"
-          />
-        </div>
-        <i class="material-icons medium" id="hamburger">menu_open</i>
-      </a>
-    </div>
-    <ul id="slide-out" class="sidenav">
-      <a href="./index.html"><li>Home</li></a>
-      <div class="divider"></div>
-      <a href="./about.html"><li>About</li></a>
-      <a href="./game.html"><li>Random Battle</li></a>
-      <a href="./builder.html"><li>Deck Builder</li></a>
-    </ul>
-    <!-- End of Navbar -->
-    <!-- Game container -->
-    <div id="game" class="contianer">
-      <!-- Player container -->
-      <div id="player" class="row flexbox-turn-on player-box">
-        <div class="col s6">
-          <div class="deck-stack container" id="player-draw">
-            <img
-              src="./assets/images/card-back.png"
-              alt="deck of pokemon cards"
-              class="poke-deck"
-            />
-
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>War Game</title>
+		<!-- Google fonts CDN -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Google icons CDN -->
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<!-- Materialize CSS CDN -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+		/>
+		<!-- Local styles -->
+		<link rel="stylesheet" href="./assets/css/index.css" />
+		<link rel="stylesheet" href="./assets/css/animation.css" />
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div id="nav-full">
+			<a href="#" data-target="slide-out" class="sidenav-trigger" id="logo">
+				<div id="logo-container">
+					<img
+						src="./assets/images/logo-main.svg"
+						id="main"
+						alt="Parsemon Logo"
+					/>
+					<img
+						src="./assets/images/logo-shadow.svg"
+						id="shadow"
+						alt="Parsemon Logo shadow for hover animation"
+					/>
+				</div>
+				<i class="material-icons medium" id="hamburger">menu_open</i>
+			</a>
+		</div>
+		<ul id="slide-out" class="sidenav">
+			<a href="./index.html"><li>Home</li></a>
+			<div class="divider"></div>
+			<a href="./about.html"><li>About</li></a>
+			<a href="./game.html"><li>Random Battle</li></a>
+			<a href="./builder.html"><li>Deck Builder</li></a>
+		</ul>
+		<!-- End of Navbar -->
+		<!-- Game container -->
+		<div id="game" class="contianer">
 			<button class="modal-trigger" href="#coinModal">Begin Play</button>
 			<div id="gameModal">
 				<div id="coinModal" class="modal">
@@ -71,6 +61,7 @@
 					</div>
 				</div>
 			</div>
+			<!-- Player container -->
 			<div id="player" class="row flexbox-turn-on player-box">
 				<div class="col s6">
 					<div class="deck-stack container" id="player-draw">
