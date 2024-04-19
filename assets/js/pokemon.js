@@ -379,7 +379,7 @@ function player1Card() {
         play1Card = player1Deck[0];
         player1Deck.shift();
         $('#player-card').attr('src', play1Card.images.large)
-        if (play2Card) {
+        if (play2Card && play2Card != '') {
             playRound()
         } else {
             $('#player-draw').addClass('disabled');
@@ -398,7 +398,7 @@ function player2Card() {
         play2Card = player2Deck[0];
         player2Deck.shift();
         $('#rival-card').attr('src', play2Card.images.large)
-        if (play1Card) {
+        if (play1Card && play1Card != '') {
             playRound()
         } else {
             $('#rival-draw').addClass('disabled');
@@ -430,7 +430,7 @@ function playRound() {
             console.log('no winner. redraw');
             console.log('Player Health: ' + player1Health);
             console.log('Rival Health: ' + player2Health);
-            chooseSide(firstPlayer)
+            chooseSide(firstPlayer, secondPlayer)
         }
     } else if (play1Card.weaknesses && !play2Card.weaknesses) {
         player1Health--;
@@ -458,6 +458,15 @@ function playRound() {
 
 }
 
+function nextRound(firstPlayer, secondPlayer) {
+    $(firstPlayer).removeClass('disabled')
+    $(secondPlayer).removeClass('disabled')
+    play1Card = '';
+    play2card = '';
+    console.log(play1Card)
+    console.log(play2Card)
+    $(secondPlayer).addClass('disabled')
+};
 
 $(document).ready(function () {
     getPokecards();
